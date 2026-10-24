@@ -107,3 +107,72 @@ window.addEventListener('resize', () => {
     tajmer = setTimeout(sobrat, 150);
 });
 window.addEventListener('load', sobrat);
+
+async function kopirovatVBufer(tekst) {
+    if (navigator.clipboard && window.isSecureContext) {
+        try {
+            await navigator.clipboard.writeText(tekst);
+            return true;
+        } catch (e) {
+            // fallback
+        }
+    }
+    const pole = document.createElement('textarea');
+    pole.value = tekst;
+    pole.style.position = 'fixed';
+    pole.style.left = '-9999px';
+    document.body.appendChild(pole);
+    pole.select();
+    let uspeh = false;
+    try {
+        uspeh = document.execCommand('copy');
+    } catch (e) {
+        uspeh = false;
+    }
+    document.body.removeChild(pole);
+    return uspeh;
+}
+
+let toastTajmer = 0;
+function pokazatToast(tekst = 'Скопировано') {
+    const toast = document.getElementById('toast');
+    if (!toast) return;
+
+    const tekstElement = toast.querySelector('.toast-text');
+    if (tekstElement) {
+        tekstElement.textContent = tekst;
+    }
+
+    toast.classList.add('toast--show');
+
+    clearTimeout(toastTajmer);
+    toastTajmer = setTimeout(() => {
+        toast.classList.remove('toast--show');
+    }, 2400);
+}
+
+document.querySelectorAll('.footer-pill--copy').forEach(knopka => {
+    knopka.addEventListener('click', async () => {
+        const dannye = knopka.getAttribute('data-copy');
+        if (!dannye) return;
+
+        await kopirovatVBufer(dannye);
+        pokazatToast('Скопировано');
+
+        const tekst = knopka.querySelector('.footer-pill-text');
+        if (!tekst) return;
+
+        if (!knopka._ishodnyjTekst) {
+            knopka._ishodnyjTekst = tekst.textContent;
+        }
+
+        tekst.textContent = dannye;
+        knopka.classList.add('footer-pill--copied');
+
+        clearTimeout(knopka._tajmer);
+        knopka._tajmer = setTimeout(() => {
+            tekst.textContent = knopka._ishodnyjTekst;
+            knopka.classList.remove('footer-pill--copied');
+        }, 10000);
+    });
+});

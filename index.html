@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -21,6 +21,11 @@
             </ul>
         </nav>
     </header>
+
+    <div id="toast" class="toast" role="status" aria-live="polite">
+        <svg class="toast-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+        <span class="toast-text">Скопировано</span>
+    </div>
 
     <main>
 
@@ -66,7 +71,7 @@
                         информацию и ищу обоснованные решения.
                     </p>
 
-                    <a class="cv-btn" href="#">Скачать CV</a>
+                    <a class="cv-btn" href="res/CV.pdf" download>Скачать CV</a>
                 </div>
 
                 <figure class="bio-photo">
@@ -81,7 +86,7 @@
                         </a>
                     </li>
                     <li>
-                        <a class="bio-link" href="#tools">
+                        <a class="bio-link" href="#skills">
                             <img class="link-icon" src="res/Icon-tools.svg" alt="">
                             Инструменты
                         </a>
@@ -99,23 +104,23 @@
             <div class="marquee">
                 <div class="marquee-track">
                     <ul class="marquee-list">
-                        <li class="skill" style="--skill-glow: 55, 118, 171">
+                        <li class="skill" style="--skill-glow: 59, 142, 237">
                             <img class="skill-icon" src="res/python.svg" alt="">
                             Python
                         </li>
-                        <li class="skill" style="--skill-glow: 247, 223, 30">
+                        <li class="skill" style="--skill-glow: 255, 222, 33">
                             <img class="skill-icon" src="res/js.svg" alt="">
                             JavaScript
                         </li>
-                        <li class="skill" style="--skill-glow: 0, 89, 156">
+                        <li class="skill" style="--skill-glow: 14, 132, 232">
                             <img class="skill-icon" src="res/c++.svg" alt="">
                             C++
                         </li>
-                        <li class="skill" style="--skill-glow: 227, 79, 38">
+                        <li class="skill" style="--skill-glow: 255, 87, 34">
                             <img class="skill-icon" src="res/html.svg" alt="">
                             HTML
                         </li>
-                        <li class="skill" style="--skill-glow: 21, 114, 182">
+                        <li class="skill" style="--skill-glow: 33, 150, 243">
                             <img class="skill-icon" src="res/css.svg" alt="">
                             CSS
                         </li>
@@ -126,17 +131,41 @@
             <div class="marquee marquee--reverse">
                 <div class="marquee-track">
                     <ul class="marquee-list">
-                        <li class="skill" style="--skill-glow: 252, 198, 36">
+                        <li class="skill" style="--skill-glow: 255, 209, 43">
                             <img class="skill-icon" src="res/linux.svg" alt="">
                             Linux
                         </li>
-                        <li class="skill" style="--skill-glow: 220, 220, 220">
+                        <li class="skill" style="--skill-glow: 0, 173, 239">
+                            <img class="skill-icon" src="res/windows.svg" alt="">
+                            Windows
+                        </li>
+                        <li class="skill" style="--skill-glow: 240, 240, 255">
                             <img class="skill-icon" src="res/Github.svg" alt="">
                             GitHub
                         </li>
-                        <li class="skill" style="--skill-glow: 255, 85, 0">
-                            <img class="skill-icon" src="res/soundcloud.svg" alt="">
-                            SoundCloud
+                        <li class="skill" style="--skill-glow: 246, 130, 31">
+                            <img class="skill-icon" src="res/cloudflare.svg" alt="">
+                            Cloudflare
+                        </li>
+                        <li class="skill" style="--skill-glow: 4, 159, 217">
+                            <img class="skill-icon" src="res/cisco.svg" alt="">
+                            Cisco Packet Tracer
+                        </li>
+                        <li class="skill" style="--skill-glow: 0, 230, 118">
+                            <img class="skill-icon" src="res/nmap.svg" alt="">
+                            Nmap
+                        </li>
+                        <li class="skill" style="--skill-glow: 22, 140, 230">
+                            <img class="skill-icon" src="res/wireshark.svg" alt="">
+                            Wireshark
+                        </li>
+                        <li class="skill" style="--skill-glow: 0, 155, 232">
+                            <img class="skill-icon" src="res/vmware.svg" alt="">
+                            VMware
+                        </li>
+                        <li class="skill" style="--skill-glow: 255, 75, 60">
+                            <img class="skill-icon" src="res/mitre.svg" alt="">
+                            MITRE ATT&CK
                         </li>
                     </ul>
                 </div>
@@ -148,15 +177,24 @@
     <footer id="contacts" class="site-footer">
         <div class="footer-top">
             <nav class="footer-socials" aria-label="Социальные сети">
-                <span class="footer-social" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle class="footer-social-dot" cx="18" cy="6" r="1"/></svg>
-                </span>
+                <a class="footer-social" href="https://www.instagram.com/fniler_ru?cplk=MTFnbXV5bmw4dWt3eg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <img class="footer-social-icon" src="res/Instagram.svg" alt="Instagram">
+                </a>
             </nav>
 
             <div class="footer-contacts" aria-label="Контактная информация">
-                <span class="footer-pill"><svg class="footer-pill-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5 9.4 3a1.5 1.5 0 0 1 1.7 1l1.1 3a1.5 1.5 0 0 1-.5 1.7l-1.5 1.2a14 14 0 0 0 5 5l1.2-1.5a1.5 1.5 0 0 1 1.7-.5l3 1.1a1.5 1.5 0 0 1 1 1.7l-.5 2.8a1.8 1.8 0 0 1-1.8 1.5C10 20 4 14 4 6.7a1.8 1.8 0 0 1 1.5-1.8Z"/></svg>Телефон</span>
-                <span class="footer-pill footer-pill--telegram"><img class="telegram-icon" src="res/Telegram.svg" alt="">Быстрая связь</span>
-                <span class="footer-pill"><svg class="footer-pill-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg>Эл. Почта</span>
+                <button type="button" class="footer-pill footer-pill--copy" data-copy="+375293509449" aria-label="Скопировать телефон">
+                    <img class="footer-pill-icon" src="res/call.svg" alt="">
+                    <span class="footer-pill-text">Телефон</span>
+                </button>
+                <a class="footer-pill footer-pill--telegram" href="https://t.me/fniler" target="_blank" rel="noopener noreferrer">
+                    <img class="telegram-icon" src="res/Telegram.svg" alt="">
+                    Быстрая связь
+                </a>
+                <button type="button" class="footer-pill footer-pill--copy" data-copy="alexeygruworked@gmail.com" aria-label="Скопировать эл. почту">
+                    <img class="footer-pill-icon" src="res/sms.svg" alt="">
+                    <span class="footer-pill-text">Эл. Почта</span>
+                </button>
             </div>
 
             <p class="footer-copy">© 2026 Fniler</p>
