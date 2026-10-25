@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FNILER — Cybersecurity</title>
-    <link rel="stylesheet" href="style.css?v=11">
+    <link rel="stylesheet" href="style.css?v=21">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Schibsted+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
+    <!-- ШАПКА -->
     <header class="shapka">
         <nav class="menu" aria-label="Основная навигация">
             <ul class="menu-list">
@@ -22,6 +23,7 @@
         </nav>
     </header>
 
+    <!-- УВЕДОМЛЕНИЕ -->
     <div id="toast" class="toast" role="status" aria-live="polite">
         <svg class="toast-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
         <span class="toast-text">Скопировано</span>
@@ -29,6 +31,7 @@
 
     <main>
 
+        <!-- ГЕРОЙ -->
         <section id="home" class="hero">
             <img class="hero-bg" src="res/imgbackg.png" alt="">
 
@@ -44,25 +47,20 @@
                 <span class="slogan-line slogan-line--white">Впереди</span>
             </p>
 
-            <div class="hero-action">
-                <p class="hero-text">
-                    От устройства <span>цифрового мира</span><br>
-                    к пониманию его <span>уязвимостей.</span>
-                </p>
+            <p class="hero-text">
+                От устройства <span>цифрового мира</span><br>
+                к пониманию его <span>уязвимостей.</span>
+            </p>
 
-                <a class="contact-btn" href="#contacts">Связаться</a>
-            </div>
+            <a class="contact-btn" href="#contacts">Связаться</a>
         </section>
 
 
+        <!-- БИОГРАФИЯ -->
         <section id="biography" class="bio">
             <h2 class="bio-title">Биография</h2>
 
-            <div class="bio-content">
-
-                <figure class="bio-photo">
-                    <img src="res/biography-photo.svg" alt="Алексей Владимирович">
-                </figure>
+            <div class="bio-row">
 
                 <div class="bio-info">
                     <h3 class="bio-name">Алексей Владимирович</h3>
@@ -80,10 +78,34 @@
                     <a class="cv-btn" href="res/CV_Grudino.pdf" download="CV_Grudino.pdf">Скачать CV</a>
                 </div>
 
+                <figure class="bio-photo">
+                    <img src="res/biography-photo.svg" alt="Алексей Владимирович">
+                </figure>
+
+                <div class="bio-terminal" aria-label="Терминал">
+                    <div class="terminal-header">
+                        <div class="terminal-dots">
+                            <span class="terminal-dot terminal-dot--red"></span>
+                            <span class="terminal-dot terminal-dot--yellow"></span>
+                            <span class="terminal-dot terminal-dot--green"></span>
+                        </div>
+                        <span class="terminal-title">bash ~ fniler</span>
+                    </div>
+                    <div class="terminal-body">
+                        <p class="terminal-line"><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">whoami</span></p>
+                        <p class="terminal-out">fniler</p>
+                        <p class="terminal-line"><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">focus</span></p>
+                        <p class="terminal-out">cybersecurity</p>
+                        <p class="terminal-line"><span class="terminal-prompt">&gt;</span> <span class="terminal-cmd">status</span></p>
+                        <p class="terminal-out">learning_mode: active<span class="terminal-cursor"></span></p>
+                    </div>
+                </div>
+
             </div>
         </section>
 
 
+        <!-- НАВЫКИ -->
         <section id="skills" class="skills">
             <h2 class="skills-title">Навыки и инструменты</h2>
             <p class="skills-sub">Технологии, формирующие мою техническую базу в кибербезопасности</p>
@@ -453,8 +475,15 @@
 
     </main>
 
+    <!-- ПОДВАЛ -->
     <footer id="contacts" class="site-footer">
         <div class="footer-top">
+            <nav class="footer-socials" aria-label="Социальные сети">
+                <a class="footer-social" href="https://www.instagram.com/fniler_ru?cplk=MTFnbXV5bmw4dWt3eg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <img class="footer-social-icon" src="res/Instagram.svg" alt="Instagram">
+                </a>
+            </nav>
+
             <div class="footer-contacts" aria-label="Контактная информация">
                 <button type="button" class="footer-pill footer-pill--copy" data-copy="+375293509449" aria-label="Скопировать телефон">
                     <img class="footer-pill-icon" src="res/call.svg" alt="">
@@ -470,19 +499,12 @@
                 </button>
             </div>
 
-            <div class="footer-bottom-row">
-                <nav class="footer-socials" aria-label="Социальные сети">
-                    <a class="footer-social" href="https://www.instagram.com/fniler_ru?cplk=MTFnbXV5bmw4dWt3eg%3D%3D&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                        <img class="footer-social-icon" src="res/Instagram.svg" alt="Instagram">
-                    </a>
-                </nav>
-
-                <p class="footer-copy">© 2026 Fniler</p>
-            </div>
+            <p class="footer-copy">© 2026 Fniler</p>
         </div>
         <img class="footer-wordmark" src="res/PORTFOLIO.svg" alt="Portfolio">
     </footer>
 
-    <script src="anim.js?v=11"></script>
+    <!-- СКРИПТ -->
+    <script src="anim.js?v=21"></script>
 </body>
 </html>

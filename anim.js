@@ -1,29 +1,33 @@
-const links = document.querySelectorAll('.menu-link');
+// ШАПКА И НАВИГАЦИЯ
+const navLinks = document.querySelectorAll('.menu-link');
 const sections = document.querySelectorAll('#home, #biography, #skills, #contacts');
-const shapka = document.querySelector('.shapka');
+const header = document.querySelector('.shapka');
+const wideScreenQuery = window.matchMedia('(min-width: 901px)');
 
-function podsvetka() {
-    const spusk = window.scrollY || document.documentElement.scrollTop;
-    const oknoH = window.innerHeight;
-    const vsegoH = document.documentElement.scrollHeight;
-    const vnizu = (oknoH + spusk) >= (vsegoH - 60);
+function updateActiveNav() {
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    const pageHeight = document.documentElement.scrollHeight;
+    const isBottom = (windowHeight + scrollPosition) >= (pageHeight - 60);
 
-    let current = sections[0];
+    let activeSection = sections[0];
 
-    if (vnizu) {
-        current = sections[sections.length - 1];
+    if (isBottom) {
+        activeSection = sections[sections.length - 1];
     } else {
-        const porog = oknoH * 0.4;
-        sections.forEach(s => {
-            if (s.getBoundingClientRect().top <= porog) current = s;
+        const threshold = windowHeight * 0.4;
+        sections.forEach(section => {
+            if (section.getBoundingClientRect().top <= threshold) {
+                activeSection = section;
+            }
         });
     }
 
-    links.forEach(link => {
-        const active = link.getAttribute('href') === '#' + current.id;
-        link.classList.toggle('active', active);
+    navLinks.forEach(link => {
+        const isActive = link.getAttribute('href') === '#' + activeSection.id;
+        link.classList.toggle('active', isActive);
 
-        if (active) {
+        if (isActive) {
             link.setAttribute('aria-current', 'location');
         } else {
             link.removeAttribute('aria-current');
@@ -31,97 +35,124 @@ function podsvetka() {
     });
 }
 
-const shiroko = window.matchMedia('(min-width: 901px)');
-
-function obnovit() {
-    podsvetka();
-    const spusk = window.scrollY || document.documentElement.scrollTop;
-    const vCentre = shapka.classList.contains('shapka--center');
-    const nado = vCentre ? spusk > 35 : spusk > 65;
-    shapka.classList.toggle('shapka--center', shiroko.matches && nado);
+function updateHeader() {
+    updateActiveNav();
+    const scrollPosition = window.scrollY || document.documentElement.scrollTop;
+    const isCentered = header.classList.contains('shapka--center');
+    const shouldCenter = isCentered ? scrollPosition > 35 : scrollPosition > 65;
+    header.classList.toggle('shapka--center', wideScreenQuery.matches && shouldCenter);
 }
 
-// Throttled scroll to ensure 60/120fps smooth scrolling without layout thrashing
-let scrollTicking = false;
+// СКРОЛЛ И ПЕРЕЗАГРУЗКА
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+
+let isScrolling = false;
 function onScroll() {
-    if (!scrollTicking) {
+    if (!isScrolling) {
         requestAnimationFrame(() => {
-            obnovit();
-            scrollTicking = false;
+            updateHeader();
+            isScrolling = false;
         });
-        scrollTicking = true;
+        isScrolling = true;
     }
 }
 
-shiroko.addEventListener('change', obnovit);
+wideScreenQuery.addEventListener('change', updateHeader);
 window.addEventListener('scroll', onScroll, { passive: true });
-window.addEventListener('load', obnovit);
 
-async function kopirovatVBufer(tekst) {
+window.addEventListener('load', () => {
+    if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+        window.scrollTo(0, 0);
+    }
+    updateHeader();
+});
+
+// ПЛАВНАЯ НАВИГАЦИЯ
+const anchorLinks = document.querySelectorAll('a[href^="#"]');
+anchorLinks.forEach(link => {
+    link.addEventListener('click', event => {
+        const targetId = link.getAttribute('href');
+        if (targetId === '#' || targetId === '') return;
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+            event.preventDefault();
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+    });
+});
+
+// БУФЕР ОБМЕНА
+async function copyToClipboard(text) {
     if (navigator.clipboard && window.isSecureContext) {
         try {
-            await navigator.clipboard.writeText(tekst);
+            await navigator.clipboard.writeText(text);
             return true;
         } catch (e) {
-            // fallback
         }
     }
-    const pole = document.createElement('textarea');
-    pole.value = tekst;
-    pole.style.position = 'fixed';
-    pole.style.left = '-9999px';
-    document.body.appendChild(pole);
-    pole.select();
-    let uspeh = false;
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-9999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+    let isSuccess = false;
     try {
-        uspeh = document.execCommand('copy');
+        isSuccess = document.execCommand('copy');
     } catch (e) {
-        uspeh = false;
+        isSuccess = false;
     }
-    document.body.removeChild(pole);
-    return uspeh;
+    document.body.removeChild(textArea);
+    return isSuccess;
 }
 
-let toastTajmer = 0;
-function pokazatToast(tekst = 'Скопировано') {
+// УВЕДОМЛЕНИЕ
+let toastTimer = 0;
+function showToast(text = 'Скопировано') {
     const toast = document.getElementById('toast');
     if (!toast) return;
 
-    const tekstElement = toast.querySelector('.toast-text');
-    if (tekstElement) {
-        tekstElement.textContent = tekst;
+    const toastText = toast.querySelector('.toast-text');
+    if (toastText) {
+        toastText.textContent = text;
     }
 
     toast.classList.add('toast--show');
 
-    clearTimeout(toastTajmer);
-    toastTajmer = setTimeout(() => {
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
         toast.classList.remove('toast--show');
     }, 2400);
 }
 
-document.querySelectorAll('.footer-pill--copy').forEach(knopka => {
-    knopka.addEventListener('click', async () => {
-        const dannye = knopka.getAttribute('data-copy');
-        if (!dannye) return;
+// КОПИРОВАНИЕ ДАННЫХ
+const copyButtons = document.querySelectorAll('.footer-pill--copy');
+copyButtons.forEach(button => {
+    button.addEventListener('click', async () => {
+        const dataToCopy = button.getAttribute('data-copy');
+        if (!dataToCopy) return;
 
-        await kopirovatVBufer(dannye);
-        pokazatToast('Скопировано');
+        await copyToClipboard(dataToCopy);
+        showToast('Скопировано');
 
-        const tekst = knopka.querySelector('.footer-pill-text');
-        if (!tekst) return;
+        const textSpan = button.querySelector('.footer-pill-text');
+        if (!textSpan) return;
 
-        if (!knopka._ishodnyjTekst) {
-            knopka._ishodnyjTekst = tekst.textContent;
+        if (!button._originalText) {
+            button._originalText = textSpan.textContent;
         }
 
-        tekst.textContent = dannye;
-        knopka.classList.add('footer-pill--copied');
+        textSpan.textContent = dataToCopy;
+        button.classList.add('footer-pill--copied');
 
-        clearTimeout(knopka._tajmer);
-        knopka._tajmer = setTimeout(() => {
-            tekst.textContent = knopka._ishodnyjTekst;
-            knopka.classList.remove('footer-pill--copied');
+        clearTimeout(button._timer);
+        button._timer = setTimeout(() => {
+            textSpan.textContent = button._originalText;
+            button.classList.remove('footer-pill--copied');
         }, 10000);
     });
 });
