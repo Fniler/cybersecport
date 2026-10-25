@@ -37,23 +37,26 @@ button:focus-visible {
 .shapka {
     position: fixed;
     top: var(--edge);
-    right: var(--edge);
+    right: 50%;
+    transform: translateX(calc(50vw - var(--edge)));
     z-index: 100;
-    transition: right 0.45s ease, transform 0.45s ease;
+    will-change: transform;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .shapka--center {
-    right: 50%;
-    transform: translateX(calc(var(--menu-w) / 2));
+    transform: translateX(50%);
 }
 
 @media (max-width: 900px) {
     .shapka {
         right: 50%;
+        transform: translateX(50%);
+        transition: none;
     }
 
     .shapka--center {
-        transform: none;
+        transform: translateX(50%);
     }
 }
 

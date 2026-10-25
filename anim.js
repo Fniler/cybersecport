@@ -26,7 +26,9 @@ const shiroko = window.matchMedia('(min-width: 901px)');
 function obnovit() {
     podsvetka();
     const spusk = window.scrollY || document.documentElement.scrollTop;
-    shapka.classList.toggle('shapka--center', shiroko.matches && spusk > 60);
+    const vCentre = shapka.classList.contains('shapka--center');
+    const nado = vCentre ? spusk > 35 : spusk > 65;
+    shapka.classList.toggle('shapka--center', shiroko.matches && nado);
 }
 
 shiroko.addEventListener('change', obnovit);
