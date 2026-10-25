@@ -1,12 +1,23 @@
-﻿:root {
-    --edge: 33px;
+/* ==========================================================================
+   FNILER Portfolio — Stylesheet
+   ========================================================================== */
+
+:root {
+    --edge: clamp(16px, 4vw, 33px);
     --line: 1.35em;
-    --line-px: clamp(27px, 2.74vw, 52.65px);
+    --line-px: clamp(24px, 2.74vw, 52.65px);
     --menu-w: min(470px, calc(100vw - var(--edge) * 2));
 }
 
 * {
     box-sizing: border-box;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    max-width: 100vw;
+    -webkit-text-size-adjust: 100%;
 }
 
 html {
@@ -19,6 +30,11 @@ body {
     background: #000;
     color: #e4e4e4;
     font-family: 'Rubik', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+section {
+    scroll-margin-top: 80px;
 }
 
 button,
@@ -28,11 +44,20 @@ select {
     font: inherit;
 }
 
+a,
+button {
+    touch-action: manipulation;
+}
+
 a:focus-visible,
 button:focus-visible {
     outline: 2px solid #aad2ff;
     outline-offset: 3px;
 }
+
+/* ==========================================================================
+   Header / Navigation (Desktop)
+   ========================================================================== */
 
 .shapka {
     position: fixed;
@@ -48,18 +73,6 @@ button:focus-visible {
     transform: translateX(50%);
 }
 
-@media (max-width: 900px) {
-    .shapka {
-        right: 50%;
-        transform: translateX(50%);
-        transition: none;
-    }
-
-    .shapka--center {
-        transform: translateX(50%);
-    }
-}
-
 .menu {
     width: var(--menu-w);
     padding: 13px 26px;
@@ -68,6 +81,7 @@ button:focus-visible {
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 4px 14px rgba(0, 0, 0, 0.5);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .menu-list {
@@ -91,6 +105,10 @@ button:focus-visible {
 .menu-link.active {
     color: #aad2ff;
 }
+
+/* ==========================================================================
+   Hero Section (Desktop)
+   ========================================================================== */
 
 .hero {
     position: relative;
@@ -128,19 +146,22 @@ button:focus-visible {
     grid-row: 1;
 }
 
+/* 2x larger FNILER and CYBERSECURITY on Desktop */
 .hero-title {
     margin: 0 0 0 -0.043em;
     font-family: 'Schibsted Grotesk', sans-serif;
-    font-size: clamp(72px, 11.46vw, 220px);
-    line-height: 0.9;
+    font-size: clamp(110px, 16vw, 300px);
+    line-height: 0.88;
+    white-space: nowrap;
 }
 
 .hero-sub {
-    margin: 0;
-    padding-left: 4px;
+    margin: 6px 0 0;
+    padding-left: 6px;
     font-family: 'Schibsted Grotesk', sans-serif;
-    font-size: clamp(16px, 1.56vw, 30px);
+    font-size: clamp(26px, 2.8vw, 54px);
     font-weight: 700;
+    letter-spacing: 0.08em;
     color: #aad2ff;
 }
 
@@ -168,11 +189,24 @@ button:focus-visible {
     font-size: clamp(26px, 2.92vw, 56px);
 }
 
-.hero-text {
-    grid-column: 1;
+/* Hero Action: Centered text with button right below */
+.hero-action {
+    grid-column: 1 / -1;
     grid-row: 2;
-    align-self: end;
-    font-size: clamp(20px, 2.03vw, 39px);
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 18px;
+    margin-bottom: clamp(20px, 5vh, 60px);
+}
+
+.hero-text {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(24px, 2.5vw, 44px);
     font-weight: 700;
     line-height: var(--line);
     color: #a0a0a0;
@@ -183,12 +217,6 @@ button:focus-visible {
 }
 
 .contact-btn {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: end;
-    --cap-line: calc(1.7618 * var(--line-px) + 0.6333 * clamp(20px, 2.03vw, 39px));
-    margin-bottom: calc(var(--line-px) + (var(--cap-line) - var(--line-px)) - 68px / 2);
-    justify-self: end;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -215,47 +243,72 @@ button:focus-visible {
     transform: scale(0.97);
 }
 
+/* ==========================================================================
+   Biography Section (Centered Layout, Photo First)
+   ========================================================================== */
+
 .bio {
-    padding: 320px var(--edge) 0;
+    padding: 240px var(--edge) 0;
 }
 
 .bio-title {
-    margin: 0 0 56px;
+    margin: 0 0 clamp(32px, 5vh, 56px);
     text-align: center;
     font-size: 56px;
     color: #fff;
 }
 
-.bio-row {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: start;
+.bio-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.bio-photo {
+    width: min(340px, 85vw);
+    margin: 0 0 clamp(24px, 4vh, 32px);
+}
+
+.bio-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
 }
 
 .bio-info {
-    max-width: 500px;
-    padding-top: 35px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .bio-name {
-    margin: 0 0 18px;
+    margin: 0 0 16px;
     font-size: 40px;
     font-weight: 600;
     color: #fff;
+    text-align: center;
 }
 
 .bio-text {
-    margin: 0 0 24px;
-    font-size: 19px;
-    font-weight: 500;
-    line-height: 1.25;
+    margin: 0 0 28px;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.55;
+    color: #c8c8c8;
+    text-align: center;
 }
 
 .cv-btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 24px;
+    padding: 12px 28px;
     font-size: 18px;
     font-weight: 600;
     color: #fff;
@@ -276,121 +329,12 @@ button:focus-visible {
     transform: scale(0.97);
 }
 
-.bio-photo {
-    width: 378px;
-    margin: 0;
-}
-
-.bio-photo img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
-.bio-terminal {
-    justify-self: end;
-    width: 310px;
-    margin: 0;
-    margin-top: 35px;
-    padding: 16px 20px 20px;
-    background: rgba(18, 22, 32, 0.45);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1px solid rgba(59, 130, 246, 0.25);
-    border-radius: 18px;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
-                0 8px 30px rgba(0, 0, 0, 0.6),
-                0 0 20px rgba(59, 130, 246, 0.15);
-    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.bio-terminal:hover {
-    border-color: rgba(59, 130, 246, 0.45);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
-                0 10px 35px rgba(0, 0, 0, 0.65),
-                0 0 28px rgba(59, 130, 246, 0.3);
-}
-
-.terminal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.terminal-dots {
-    display: flex;
-    gap: 7px;
-}
-
-.terminal-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-}
-
-.terminal-dot--red { background: #ff5f56; }
-.terminal-dot--yellow { background: #ffbd2e; }
-.terminal-dot--green { background: #27c93f; }
-
-.terminal-title {
-    font-size: 11px;
-    font-weight: 500;
-    color: #64748b;
-    letter-spacing: 0.05em;
-}
-
-.terminal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-.terminal-line {
-    margin: 0;
-    color: #60a5fa;
-    font-weight: 600;
-}
-
-.terminal-prompt {
-    color: #3b82f6;
-    margin-right: 4px;
-    user-select: none;
-}
-
-.terminal-cmd {
-    color: #93c5fd;
-    text-shadow: 0 0 8px rgba(96, 165, 250, 0.4);
-}
-
-.terminal-out {
-    margin: 0 0 8px;
-    color: #aad2ff;
-    padding-left: 14px;
-    text-shadow: 0 0 10px rgba(170, 210, 255, 0.35);
-}
-
-.terminal-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 15px;
-    margin-left: 6px;
-    background: #60a5fa;
-    vertical-align: middle;
-    animation: terminal-blink 1s step-end infinite;
-}
-
-@keyframes terminal-blink {
-    50% { opacity: 0; }
-}
+/* ==========================================================================
+   Skills Section (2x Distance from Biography)
+   ========================================================================== */
 
 .skills {
-    padding: 320px 0 0;
+    padding: 640px 0 0;
 }
 
 .skills-title {
@@ -474,28 +418,45 @@ button:focus-visible {
     min-height: 100vh;
 }
 
+/* ==========================================================================
+   Footer Section (2x Distance from Skills)
+   ========================================================================== */
+
 .site-footer {
     display: flex;
     min-height: 70vh;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 0 var(--edge) 8px;
+    padding: clamp(240px, 30vh, 480px) var(--edge) 8px;
     overflow: hidden;
 }
 
 .footer-top {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 20px;
-    margin-bottom: 10px;
+    gap: 24px;
+    margin-bottom: 12px;
+    width: 100%;
 }
 
-.footer-socials,
 .footer-contacts {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 12px;
+}
+
+.footer-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.footer-socials {
+    display: flex;
+    align-items: center;
 }
 
 .footer-social {
@@ -527,10 +488,6 @@ button:focus-visible {
     height: 22px;
     display: block;
     object-fit: contain;
-}
-
-.footer-contacts {
-    justify-content: center;
 }
 
 .footer-pill {
@@ -595,11 +552,11 @@ button:focus-visible {
 }
 
 .footer-copy {
-    justify-self: end;
     margin: 0;
     color: #aaa;
     font-size: 13px;
     font-weight: 500;
+    text-align: right;
 }
 
 .footer-wordmark {
@@ -609,173 +566,9 @@ button:focus-visible {
     opacity: 0.68;
 }
 
-@media (max-width: 900px) {
-    .footer-top {
-        grid-template-columns: 1fr auto;
-    }
-
-    .footer-contacts {
-        grid-column: 1 / -1;
-        grid-row: 1;
-        flex-wrap: wrap;
-    }
-
-    .footer-socials {
-        grid-column: 1;
-        grid-row: 2;
-    }
-
-    .footer-copy {
-        grid-column: 2;
-        grid-row: 2;
-    }
-
-    .hero {
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto auto auto;
-        gap: 40px 0;
-        padding: 0 var(--edge);
-    }
-
-    .hero-brand {
-        grid-row: 1;
-        padding-top: 140px;
-    }
-
-    .slogan {
-        grid-column: 1;
-        grid-row: 2;
-        align-items: flex-start;
-        margin: 0;
-    }
-
-    .hero-text {
-        grid-column: 1;
-        grid-row: 3;
-    }
-
-    .contact-btn {
-        grid-column: 1;
-        grid-row: 4;
-        justify-self: start;
-        align-self: auto;
-        margin-bottom: 0;
-    }
-
-    .bio {
-        padding-top: 150px;
-    }
-
-    .bio-row {
-        grid-template-columns: 1fr;
-        justify-items: center;
-        gap: 32px;
-    }
-
-    .bio-photo {
-        width: min(378px, 100%);
-    }
-
-    .bio-info,
-    .bio-terminal {
-        width: 100%;
-        max-width: 500px;
-        padding-top: 0;
-        margin-top: 0;
-        justify-self: center;
-    }
-}
-
-@media (max-width: 600px) {
-    .toast {
-        top: calc(var(--edge) + 54px);
-        padding: 8px 18px;
-        font-size: 13px;
-    }
-
-    .site-footer {
-        min-height: 60vh;
-        padding-right: 16px;
-        padding-left: 16px;
-    }
-
-    .footer-top {
-        gap: 12px;
-    }
-
-    .footer-contacts {
-        gap: 6px;
-    }
-
-    .footer-pill {
-        min-height: 29px;
-        padding: 0 8px;
-        font-size: 11px;
-    }
-
-    .hero-title {
-        font-size: clamp(56px, 18vw, 120px);
-    }
-
-    .menu {
-        padding: 13px 16px;
-    }
-
-    .menu-list {
-        gap: 10px;
-    }
-
-    .menu-link {
-        font-size: 14px;
-    }
-
-    .bio-title {
-        font-size: 40px;
-    }
-
-    .skills {
-        padding-top: 150px;
-    }
-
-    .skills-title {
-        margin-bottom: 12px;
-        font-size: 40px;
-    }
-
-    .skills-sub {
-        font-size: 18px;
-    }
-
-    .marquee {
-        margin-top: 15px;
-    }
-
-    .marquee--reverse {
-        margin-top: 14px;
-    }
-
-    .marquee-list {
-        gap: 14px;
-        padding: 0 7px;
-    }
-
-    .skill {
-        gap: 8px;
-        height: 30px;
-        padding: 0 11px;
-        font-size: 14px;
-        border-radius: 5px;
-    }
-
-    .skill-icon {
-        width: 16px;
-        height: 16px;
-    }
-
-    .bio-name {
-        font-size: 30px;
-    }
-}
+/* ==========================================================================
+   Toast Notification Component
+   ========================================================================== */
 
 .toast {
     position: fixed;
@@ -829,4 +622,400 @@ button:focus-visible {
     stroke-linecap: round;
     stroke-linejoin: round;
     filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.8));
+}
+
+/* ==========================================================================
+   Media Queries: Tablets & Mobile Landscape (<= 900px)
+   ========================================================================== */
+
+@media (max-width: 900px) {
+    /* Floating Bottom Dock Navigation */
+    .shapka {
+        top: auto;
+        bottom: max(16px, env(safe-area-inset-bottom, 16px));
+        right: 50%;
+        transform: translateX(50%);
+        transition: none;
+        z-index: 100;
+    }
+
+    .shapka--center {
+        transform: translateX(50%);
+    }
+
+    .menu {
+        border: 1px solid rgba(59, 130, 246, 0.25);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                    0 8px 30px rgba(0, 0, 0, 0.7),
+                    0 0 20px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Section scroll clearance for bottom bar */
+    section {
+        scroll-margin-top: 24px;
+        scroll-margin-bottom: 85px;
+    }
+
+    /* Toast at top of screen */
+    .toast {
+        top: max(18px, env(safe-area-inset-top, 18px));
+    }
+
+    /* Hero Layout: Brand top, Action centered in remaining area */
+    .hero {
+        min-height: 100svh;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        padding: max(32px, env(safe-area-inset-top, 24px)) var(--edge) calc(80px + env(safe-area-inset-bottom, 16px));
+    }
+
+    .hero-brand {
+        margin: 0;
+        padding-top: 0;
+        align-self: flex-start;
+    }
+
+    /* 2x larger FNILER and CYBERSECURITY */
+    .hero-title {
+        font-size: clamp(96px, 22vw, 160px);
+        line-height: 0.86;
+        margin-left: 0;
+        white-space: nowrap;
+    }
+
+    .hero-sub {
+        font-size: clamp(28px, 6vw, 44px);
+        letter-spacing: 0.08em;
+        padding-left: 2px;
+    }
+
+    /* Completely hide slogan on mobile */
+    .slogan {
+        display: none !important;
+    }
+
+    /* Centered in hero with button right below */
+    .hero-action {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+        margin: auto 0;
+        width: 100%;
+        max-width: 540px;
+    }
+
+    .hero-text {
+        margin: 0;
+        font-size: clamp(20px, 3.8vw, 30px);
+        line-height: 1.35;
+        text-align: center;
+    }
+
+    .contact-btn {
+        margin: 0;
+    }
+
+    /* Biography */
+    .bio {
+        padding: clamp(70px, 10vh, 120px) var(--edge) 0;
+    }
+
+    .bio-title {
+        margin-bottom: clamp(28px, 5vh, 44px);
+        font-size: clamp(38px, 6vw, 48px);
+    }
+
+    .bio-photo {
+        width: min(340px, 80vw);
+    }
+
+    .bio-content {
+        max-width: 600px;
+    }
+
+    /* Skills: 2x distance from Bio */
+    .skills {
+        padding: clamp(140px, 20vh, 240px) 0 0;
+    }
+
+    .skills-title {
+        font-size: clamp(38px, 6vw, 48px);
+    }
+
+    /* Footer: 2x distance from Skills */
+    .site-footer {
+        min-height: auto;
+        padding: clamp(120px, 16vh, 180px) var(--edge) calc(85px + env(safe-area-inset-bottom, 16px));
+    }
+}
+
+/* ==========================================================================
+   Media Queries: Smartphones (<= 640px)
+   ========================================================================== */
+
+@media (max-width: 640px) {
+    /* Bottom Navigation Bar */
+    .shapka {
+        bottom: max(14px, env(safe-area-inset-bottom, 14px));
+    }
+
+    .menu {
+        width: min(440px, calc(100vw - 20px));
+        padding: 9px 14px;
+        border-radius: 40px;
+        background: rgba(18, 22, 32, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+    }
+
+    .menu-list {
+        gap: 8px;
+    }
+
+    .menu-link {
+        font-size: 13.5px;
+        padding: 4px 6px;
+    }
+
+    /* Toast notification at top */
+    .toast {
+        top: max(18px, env(safe-area-inset-top, 18px));
+        padding: 8px 18px;
+        font-size: 13px;
+    }
+
+    /* Hero */
+    .hero {
+        padding: max(28px, env(safe-area-inset-top, 20px)) var(--edge) calc(76px + env(safe-area-inset-bottom, 14px));
+    }
+
+    /* 2x larger FNILER and CYBERSECURITY */
+    .hero-title {
+        font-size: clamp(82px, 23vw, 130px);
+        line-height: 0.86;
+        margin-left: 0;
+        white-space: nowrap;
+    }
+
+    .hero-sub {
+        font-size: clamp(25px, 6.8vw, 36px);
+        letter-spacing: 0.06em;
+        padding-left: 2px;
+    }
+
+    /* Centered in hero with button right below */
+    .hero-action {
+        gap: 14px;
+        margin: auto 0;
+        max-width: 100%;
+    }
+
+    .hero-text {
+        font-size: clamp(18px, 4.8vw, 23px);
+        line-height: 1.35;
+        text-align: center;
+    }
+
+    .contact-btn {
+        width: 160px;
+        height: 50px;
+        font-size: 16px;
+        border-radius: 13px;
+    }
+
+    /* Biography */
+    .bio {
+        padding: clamp(60px, 8vh, 90px) var(--edge) 0;
+    }
+
+    .bio-title {
+        font-size: clamp(32px, 8.5vw, 40px);
+        margin-bottom: 24px;
+    }
+
+    .bio-photo {
+        width: min(290px, 78vw);
+        margin-bottom: 22px;
+    }
+
+    .bio-name {
+        font-size: clamp(24px, 6.5vw, 30px);
+        margin-bottom: 12px;
+    }
+
+    .bio-text {
+        font-size: 15.5px;
+        line-height: 1.5;
+        margin-bottom: 22px;
+    }
+
+    .cv-btn {
+        padding: 11px 26px;
+        font-size: 16px;
+        border-radius: 13px;
+    }
+
+    /* Skills: 2x distance from Bio */
+    .skills {
+        padding: clamp(120px, 16vh, 180px) 0 0;
+    }
+
+    .skills-title {
+        font-size: clamp(32px, 8.5vw, 40px);
+        margin-bottom: 12px;
+    }
+
+    .skills-sub {
+        font-size: clamp(15px, 3.8vw, 17px);
+        line-height: 1.35;
+    }
+
+    .marquee {
+        margin-top: 18px;
+        padding: 8px 0;
+    }
+
+    .marquee--reverse {
+        margin-top: 10px;
+    }
+
+    .marquee-list {
+        gap: 12px;
+        padding: 0 6px;
+    }
+
+    .skill {
+        gap: 8px;
+        height: 36px;
+        padding: 0 13px;
+        font-size: 14px;
+        border-radius: 8px;
+    }
+
+    .skill-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    /* Footer: 2x distance from Skills, Contacts on top, Instagram on left corner, © on right corner */
+    .site-footer {
+        padding: clamp(100px, 14vh, 160px) var(--edge) calc(85px + env(safe-area-inset-bottom, 14px));
+    }
+
+    .footer-top {
+        gap: 20px;
+        margin-bottom: 16px;
+        width: 100%;
+    }
+
+    .footer-contacts {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-width: 320px;
+        gap: 9px;
+    }
+
+    .footer-pill {
+        justify-content: center;
+        min-height: 42px;
+        padding: 0 16px;
+        font-size: 13px;
+        border-radius: 12px;
+        width: 100%;
+    }
+
+    .footer-pill-icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .telegram-icon {
+        width: 22px;
+        height: 22px;
+    }
+
+    .footer-bottom-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 2px;
+    }
+
+    .footer-socials {
+        display: flex;
+        align-items: center;
+    }
+
+    .footer-social {
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+    }
+
+    .footer-copy {
+        font-size: 12px;
+        color: #888;
+        text-align: right;
+    }
+}
+
+/* ==========================================================================
+   Media Queries: Compact Phones (<= 380px)
+   ========================================================================== */
+
+@media (max-width: 380px) {
+    .menu {
+        padding: 8px 10px;
+    }
+
+    .menu-list {
+        gap: 4px;
+    }
+
+    .menu-link {
+        font-size: 12px;
+        padding: 4px 4px;
+    }
+
+    /* 2x larger title, gracefully sized for compact 320-380px width */
+    .hero-title {
+        font-size: clamp(68px, 20vw, 86px);
+        line-height: 0.88;
+    }
+
+    .hero-sub {
+        font-size: clamp(21px, 5.8vw, 26px);
+    }
+
+    .hero-action {
+        gap: 12px;
+    }
+
+    .hero-text {
+        font-size: 16.5px;
+    }
+
+    .contact-btn {
+        margin-top: 0;
+    }
+
+    .bio-photo {
+        width: min(250px, 75vw);
+    }
+
+    .bio-text {
+        font-size: 14.5px;
+    }
+
+    .footer-contacts {
+        max-width: 100%;
+    }
 }
