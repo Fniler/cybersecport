@@ -1,4 +1,4 @@
-/* ОБЩИЕ СТИЛИ */
+﻿/* ОБЩИЕ СТИЛИ */
 :root {
     --edge: 33px;
     --line: 1.35em;
@@ -951,17 +951,17 @@ button:focus-visible {
 
     .hero-text {
         font-size: clamp(18px, 4.8vw, 23px);
-        line-height: 1.35;
+        line-height: 1.15;
         text-align: center;
-        margin: auto 0 14px;
+        margin: auto 0 12px;
     }
 
     .contact-btn {
-        width: 172px;
-        height: 52px;
+        width: 130px;
+        height: 41px;
         font-size: 17.5px;
         border-radius: 13px;
-        margin: 0 0 auto;
+        margin: 0 0 250px;
     }
 
     .bio {
